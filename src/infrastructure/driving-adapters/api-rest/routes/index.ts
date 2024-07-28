@@ -5,7 +5,7 @@ import userRoutes from './user.routes'
 
 const route = Router()
 
-route.use('/users', userRoutes)
+route.use('/user', userRoutes)
 
 route.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof UserAlreadyExistException) {
