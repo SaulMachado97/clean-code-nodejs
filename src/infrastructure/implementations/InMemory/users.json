@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "name": "Juan Perez",
+    "email": "juan.perez@example.com",
+    "username": "juan.perez",
+    "age": 30,
+    "phone": "+1-555-1234",
+    "status": true
+  },
+  {
+    "id": 2,
+    "name": "Ana Gomez",
+    "email": "ana.gomez@example.com",
+    "username": "ana.gomez",
+    "age": 25,
+    "phone": "+1-555-5678",
+    "status": false
+  },
+  {
+    "id": 3,
+    "name": "Carlos Martinez",
+    "email": "carlos.martinez@example.com",
+    "username": "carlos.martinez",
+    "age": 28,
+    "phone": "+1-555-8765",
+    "status": true
+  },
+  {
+    "id": 4,
+    "name": "Maria Lopez",
+    "email": "maria.lopez@example.com",
+    "username": "maria.lopez",
+    "age": 32,
+    "phone": "+1-555-4321",
+    "status": true
+  }
+]
