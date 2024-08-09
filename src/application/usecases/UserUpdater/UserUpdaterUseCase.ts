@@ -13,7 +13,7 @@ export class UserUpdaterUseCase {
 
   async run (data: User): Promise<User> {
     const user = await this._userGetterById.run(data.id)
-
+    console.log(user)
     const dataToUpdate: User = {
       id: data.id,
       name: data.name ?? user.name,

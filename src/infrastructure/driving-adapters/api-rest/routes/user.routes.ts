@@ -2,14 +2,16 @@ import { Router } from 'express'
 
 import {
   getAllUserController,
+  getUserByIdController,
   createUserController,
   updateUserController,
   deleteUserController
-} from '../controllers'
+} from '../controllers/'
 
 const route = Router()
 
 route.get('/user', getAllUserController)
+route.get('/user/:id', getUserByIdController)
 route.post('/user', createUserController)
 route.put('/user/:id', updateUserController)
 route.delete('/user/:id', deleteUserController)

@@ -1,3 +1,4 @@
+/*
 import { User } from '../../../../domain/entities/User'
 import { UserRepository } from '../../../../domain/repositories/UserRepository'
 import { DynamoDB } from '../../../../infrastructure/driven-adapters/aws/dynamo-db'
@@ -184,3 +185,4 @@ export class DynamoDBUserRepository implements UserRepository {
     await this.db.deleteItem(params).promise()
   }
 }
+*/

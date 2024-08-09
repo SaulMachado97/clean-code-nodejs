@@ -6,12 +6,15 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start-console-app": "nodemon ./src/infrastructure/driving-adapters/console/console.ts",
-    "start-rest-api": "nodemon ./src/infrastructure/driving-adapters/api-rest/start.ts"
+    "start-rest-api": "nodemon ./src/infrastructure/driving-adapters/api-rest/start.ts",
+    "start-demo": "nodemon ./src/index.ts"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "aws-sdk": "^2.1659.0",
+    "@aws-sdk/client-dynamodb": "^3.620.0",
+    "@aws-sdk/credential-providers": "^3.620.0",
+    "@aws-sdk/lib-dynamodb": "^3.620.0",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "uuid": "^10.0.0"
