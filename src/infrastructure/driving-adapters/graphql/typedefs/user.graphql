@@ -1,0 +1,30 @@
+#Tipo usuario
+type User {
+  id: ID!
+  name: String
+  email: String
+  username: String!
+  age: Int
+  phone: String
+  status: Boolean
+}
+
+#Inputs
+input UserCreateInput {
+  name: String
+  email: String
+  username: String!
+  age: Int
+  phone: String
+  status: Boolean
+}
+
+input UserUpdateInput {
+  id: ID!
+  name: String
+  email: String
+  username: String!
+  age: Int
+  phone: String
+  status: Boolean
+}

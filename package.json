@@ -7,20 +7,27 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start-console-app": "nodemon ./src/infrastructure/driving-adapters/console/console.ts",
     "start-rest-api": "nodemon ./src/infrastructure/driving-adapters/api-rest/start.ts",
+    "start-app": "nodemon ./src/infrastructure/driving-adapters/index.ts",
     "start-demo": "nodemon ./src/index.ts"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@apollo/server": "^4.11.0",
     "@aws-sdk/client-dynamodb": "^3.620.0",
     "@aws-sdk/credential-providers": "^3.620.0",
     "@aws-sdk/lib-dynamodb": "^3.620.0",
+    "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "graphql": "^16.9.0",
+    "module-alias": "^2.2.3",
     "uuid": "^10.0.0"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
+    "@types/graphql": "^14.5.0",
     "@types/node": "^20.14.10",
     "@types/uuid": "^10.0.0",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
@@ -30,5 +37,10 @@
     "nodemon": "^3.1.4",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.3"
+  },
+  "_moduleAliases": {
+    "@domain": "src/domain",
+    "@application": "src/application",
+    "@infrastructure": "src/infrastructure"
   }
 }
