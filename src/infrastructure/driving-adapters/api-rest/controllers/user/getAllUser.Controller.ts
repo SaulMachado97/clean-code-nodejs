@@ -1,3 +1,4 @@
+/*
 import { NextFunction, Request, Response } from 'express'
 import { DynamoDBUserRepository } from '../../../../implementations/aws/dynamo-db/DynamoDBUserRepository'
 import { UserGetterUseCase } from '../../../../../application/usecases/UserGetter/UserGetterUseCase'
@@ -13,3 +14,4 @@ export const getAllUser = async (req: Request, res: Response, next: NextFunction
     next(e)
   }
 }
+*/

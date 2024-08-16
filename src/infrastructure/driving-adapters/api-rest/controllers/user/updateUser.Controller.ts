@@ -1,3 +1,4 @@
+/*
 import { NextFunction, Request, Response } from 'express'
 import { User } from '../../../../../domain/entities/User'
 import { DynamoDBUserRepository } from '../../../../../infrastructure/implementations/aws/dynamo-db/DynamoDBUserRepository'
@@ -35,3 +36,4 @@ export const updateUser = async (req: Request, res: Response, next: NextFunction
     next(e)
   }
 }
+*/

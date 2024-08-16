@@ -1,3 +1,4 @@
+/*
 // import { InMemoryUserRepository } from '../../implementations/InMemory/InMemoryUserRepository'
 import { DynamoDBUserRepository } from '../../implementations/aws/dynamo-db/DynamoDBUserRepository'
 import { UserCreatorUseCase } from '../../../application/usecases/UserCreator/UserCreatorUseCase'
@@ -68,5 +69,5 @@ import { UserUpdaterUseCase } from '../../../application/usecases/UserUpdater/Us
   const userData4 = await userGetterUseCase.run()
   console.log('Los datos actualizados despues de eliminar son: ')
   console.log(userData4)
-  */
 })()
+*/

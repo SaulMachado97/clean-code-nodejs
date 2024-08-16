@@ -33,3 +33,10 @@ npm run build
 npm run deploy
 ```
 
+# test
+``` 
+npm run test
+npm run test:e2e
+npm run test:cypress
+npm run test:ci
+```

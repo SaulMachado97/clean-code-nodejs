@@ -1,3 +1,4 @@
+/*
 import AWS from 'aws-sdk'
 import * as dotenv from 'dotenv'
 
@@ -8,3 +9,4 @@ AWS.config.update({
 })
 
 export default AWS
+*/

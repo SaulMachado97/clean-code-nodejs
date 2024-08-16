@@ -1,3 +1,4 @@
+/*
 import AWS from '../aws'
 
 export class DynamoDB {
@@ -12,3 +13,4 @@ export class DynamoDB {
     return this._INSTANCE
   }
 }
+*/

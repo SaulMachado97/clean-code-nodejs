@@ -1,3 +1,4 @@
+/*
 import { NextFunction, Request, Response } from 'express'
 import { DynamoDBUserRepository } from '../../../../../infrastructure/implementations/aws/dynamo-db/DynamoDBUserRepository'
 import { UserDeleterUseCase } from '../../../../../application/usecases/UserDeleter/UserDeleterUseCase'
@@ -15,3 +16,4 @@ export const deleteUser = async (req: Request, res: Response, next: NextFunction
     next(e)
   }
 }
+*/
