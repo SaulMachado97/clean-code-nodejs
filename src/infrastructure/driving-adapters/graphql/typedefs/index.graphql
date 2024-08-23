@@ -1,7 +1,10 @@
 type Query {
-  user: [User]
+  user(id: ID!): User
+  users: [User]
 }
 
 type Mutation {
   createUser(user: UserCreateInput): User
+  updateUser(user: UserUpdateInput): User
+  deleteUser(id: ID!): User
 }

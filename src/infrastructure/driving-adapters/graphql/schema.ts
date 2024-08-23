@@ -18,6 +18,4 @@ const schema = makeExecutableSchema({
   resolvers
 })
 
-console.log(typeDefs, resolvers)
-
 export default schema

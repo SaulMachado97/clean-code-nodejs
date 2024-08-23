@@ -9,8 +9,8 @@ export const deleteUser = async (req: Request, res: Response, next: NextFunction
   const userDeleterUseCase = new UserDeleterUseCase(dynamoDBUserRepo)
 
   try {
-    const userCreated = await userDeleterUseCase.run(id)
-    res.json(userCreated)
+    const userDeleted = await userDeleterUseCase.run(id)
+    res.json(userDeleted)
   } catch (e) {
     next(e)
   }
