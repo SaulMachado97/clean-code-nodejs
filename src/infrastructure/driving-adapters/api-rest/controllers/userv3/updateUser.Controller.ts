@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express'
-import { User } from '../../../../../domain/entities/User'
-import { DynamoDBUserRepository } from '../../../../../infrastructure/implementations/aws/dynamo-db-v3/DynamoDBUserRepository'
-import { UserUpdaterUseCase } from '../../../../../application/usecases/UserUpdater/UserUpdaterUseCase'
+// import { User } from '@domain/entities/user/User'
+import { DynamoDBUserRepository } from '@infrastructure/implementations/aws/dynamo-db-v3/DynamoDBUserRepository'
+import { UserUpdaterUseCase } from '@application/usecases/UserUpdater/UserUpdaterUseCase'
 
 export const updateUser = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const {
@@ -18,7 +18,7 @@ export const updateUser = async (req: Request, res: Response, next: NextFunction
   const dynamoDBUserRepo = new DynamoDBUserRepository()
   const userUpdaterUseCase = new UserUpdaterUseCase(dynamoDBUserRepo)
 
-  const userToUpdate: User = {
+  const userToUpdate = {
     id,
     name,
     email,

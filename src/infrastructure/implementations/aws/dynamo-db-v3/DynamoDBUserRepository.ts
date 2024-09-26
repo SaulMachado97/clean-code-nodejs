@@ -1,5 +1,5 @@
 import { ScanCommand } from '@aws-sdk/client-dynamodb'
-import { User } from '../../../../domain/entities/User'
+import { User } from '../../../../domain/entities/user/User'
 import { UserRepository } from '../../../../domain/repositories/UserRepository'
 import { DynamoDB } from '../../../driven-adapters/aws_v3/dynamo-db'
 import { DeleteCommand, GetCommand, PutCommand, UpdateCommand } from '@aws-sdk/lib-dynamodb'
@@ -33,7 +33,7 @@ export class DynamoDBUserRepository implements UserRepository {
         const phone: string = getResponse.Item.phone ?? ''
         const status: boolean = getResponse.Item.status ?? false
 
-        const userFound: User = {
+        const userFound: User = User.fromPrimitives({
           id,
           name,
           email,
@@ -41,7 +41,7 @@ export class DynamoDBUserRepository implements UserRepository {
           age: Number(age),
           phone,
           status
-        }
+        })
         return userFound
       } else {
         console.log('No se encontró el usuario.')
@@ -87,7 +87,7 @@ export class DynamoDBUserRepository implements UserRepository {
           const phone: string = item.phone.S ?? ''
           const status: boolean = item.status.BOOL ?? false
 
-          return {
+          return User.fromPrimitives({
             id: id.split('_')[1] ?? id,
             name,
             email,
@@ -95,7 +95,7 @@ export class DynamoDBUserRepository implements UserRepository {
             age: Number(age),
             phone,
             status
-          }
+          })
         })
 
         return users
@@ -123,8 +123,8 @@ export class DynamoDBUserRepository implements UserRepository {
     const params = {
       TableName: 'saulo-data-faker',
       Item: {
-        'SAULO-DATA-PK': `USER_${user.id}`,
-        'SAULO-DATA-SK': `USER_${user.id}`,
+        'SAULO-DATA-PK': `USER_${user.id._value}`,
+        'SAULO-DATA-SK': `USER_${user.id._value}`,
         ENTITY_TYPE: 'USER',
         id: user.id,
         name: user.name,
@@ -150,8 +150,8 @@ export class DynamoDBUserRepository implements UserRepository {
     const command = new UpdateCommand({
       TableName: this.tableName,
       Key: {
-        'SAULO-DATA-PK': `USER_${user.id}`,
-        'SAULO-DATA-SK': `USER_${user.id}`
+        'SAULO-DATA-PK': `USER_${user.id._value}`,
+        'SAULO-DATA-SK': `USER_${user.id._value}`
       },
       UpdateExpression: 'set #username = :username, #name = :name, #email = :email, #age = :age, #phone = :phone, #status = :status',
       ExpressionAttributeNames: {
@@ -187,7 +187,7 @@ export class DynamoDBUserRepository implements UserRepository {
         age
       } = response.Attributes
 
-      return {
+      return User.fromPrimitives({
         id,
         status,
         username,
@@ -195,7 +195,7 @@ export class DynamoDBUserRepository implements UserRepository {
         name,
         phone,
         age
-      }
+      })
     }
 
     return user
@@ -205,8 +205,8 @@ export class DynamoDBUserRepository implements UserRepository {
     const command = new DeleteCommand({
       TableName: this.tableName,
       Key: {
-        'SAULO-DATA-PK': `USER_${user.id}`,
-        'SAULO-DATA-SK': `USER_${user.id}`
+        'SAULO-DATA-PK': `USER_${user.id._value}`,
+        'SAULO-DATA-SK': `USER_${user.id._value}`
       }
     })
 
