@@ -7,6 +7,7 @@ const route = Router()
 
 route.use('/user', userRoutes)
 
+// Este es el middleware
 route.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof UserAlreadyExistException) {
     res.status(400).json({

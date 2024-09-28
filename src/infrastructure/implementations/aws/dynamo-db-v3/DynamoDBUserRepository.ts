@@ -2,7 +2,12 @@ import { ScanCommand } from '@aws-sdk/client-dynamodb'
 import { User } from '../../../../domain/entities/user/User'
 import { UserRepository } from '../../../../domain/repositories/UserRepository'
 import { DynamoDB } from '../../../driven-adapters/aws_v3/dynamo-db'
-import { DeleteCommand, GetCommand, PutCommand, UpdateCommand } from '@aws-sdk/lib-dynamodb'
+import { DeleteCommand, ExecuteStatementCommand, GetCommand, PutCommand, UpdateCommand } from '@aws-sdk/lib-dynamodb'
+import { Encrypt } from '@domain/services/Encrypt/Encrypt'
+import { Exception } from '@domain/exceptions/Exception'
+import * as dotenv from 'dotenv'
+
+dotenv.config()
 
 export class DynamoDBUserRepository implements UserRepository {
   private readonly docClient = DynamoDB.getDocClient()
@@ -29,6 +34,7 @@ export class DynamoDBUserRepository implements UserRepository {
         const name: string = getResponse.Item.name ?? ''
         const email: string = getResponse.Item.email ?? ''
         const username: string = getResponse.Item.username ?? ''
+        const password: string = getResponse.Item.password ?? ''
         const age: string = getResponse.Item.age ?? '0'
         const phone: string = getResponse.Item.phone ?? ''
         const status: boolean = getResponse.Item.status ?? false
@@ -38,6 +44,7 @@ export class DynamoDBUserRepository implements UserRepository {
           name,
           email,
           username,
+          password,
           age: Number(age),
           phone,
           status
@@ -83,6 +90,7 @@ export class DynamoDBUserRepository implements UserRepository {
           const name: string = item.name.S ?? ''
           const email: string = item.email.S ?? ''
           const username: string = item.username.S ?? ''
+          const password: string = item.password.S ?? ''
           const age: string = item.age.N ?? '0'
           const phone: string = item.phone.S ?? ''
           const status: boolean = item.status.BOOL ?? false
@@ -92,6 +100,7 @@ export class DynamoDBUserRepository implements UserRepository {
             name,
             email,
             username,
+            password,
             age: Number(age),
             phone,
             status
@@ -126,13 +135,14 @@ export class DynamoDBUserRepository implements UserRepository {
         'SAULO-DATA-PK': `USER_${user.id._value}`,
         'SAULO-DATA-SK': `USER_${user.id._value}`,
         ENTITY_TYPE: 'USER',
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        username: user.username,
-        age: user.age,
-        phone: user.phone,
-        status: user.status
+        id: user.id._value,
+        name: user.name._value,
+        email: user.email._value,
+        username: user.username._value,
+        password: user.password._value,
+        age: user.age?._value,
+        phone: user.phone?._value,
+        status: user.status?._value
       }
     }
 
@@ -143,7 +153,58 @@ export class DynamoDBUserRepository implements UserRepository {
   }
 
   async getByUsername (bodyUsername: string): Promise<User | null> {
-    return null
+    try {
+      const command = new ExecuteStatementCommand({
+        Statement: `SELECT * FROM "${this.tableName}" WHERE "username"=?`,
+        Parameters: [bodyUsername],
+        ConsistentRead: true
+      })
+
+      // const command = new GetCommand(params)
+
+      const getResponse = await this.docClient.send(command)
+
+      if (getResponse.Items === undefined) return null
+
+      if (getResponse.Items != null) {
+        const id: string = getResponse.Items[0].id ?? ''
+        const name: string = getResponse.Items[0].name ?? ''
+        const email: string = getResponse.Items[0].email ?? ''
+        const username: string = getResponse.Items[0].username ?? ''
+        const password: string = getResponse.Items[0].password ?? ''
+        const age: string = getResponse.Items[0].age ?? '0'
+        const phone: string = getResponse.Items[0].phone ?? ''
+        const status: boolean = getResponse.Items[0].status ?? false
+
+        const userFound: User = User.fromPrimitives({
+          id,
+          name,
+          email,
+          username,
+          password,
+          age: Number(age),
+          phone,
+          status
+        })
+        return userFound
+      } else {
+        console.log('No se encontró el usuario.')
+        return null // O manejar el caso de no encontrar el usuario
+      }
+    } catch (error: unknown) {
+      console.error('Error al obtener el usuario:', error)
+
+      // Asegúrate de que error sea un objeto y tenga la propiedad $response
+      if (error instanceof Error) {
+        console.error('Error message:', error.message)
+      }
+
+      if (typeof error === 'object' && error !== null && '$response' in error) {
+        console.error('Raw response:', (error as any).$response)
+      }
+
+      throw error // Vuelve a lanzar el error si es necesario
+    }
   }
 
   async update (user: User): Promise<User> {
@@ -181,6 +242,7 @@ export class DynamoDBUserRepository implements UserRepository {
         'SAULO-DATA-PK': id,
         status,
         username,
+        password,
         email,
         name,
         phone,
@@ -191,6 +253,7 @@ export class DynamoDBUserRepository implements UserRepository {
         id,
         status,
         username,
+        password,
         email,
         name,
         phone,
@@ -211,5 +274,41 @@ export class DynamoDBUserRepository implements UserRepository {
     })
 
     await this.docClient.send(command)
+  }
+
+  async login (username: string, password: string): Promise<any> {
+    try {
+      const user = await this.getByUsername(username)
+
+      if (user != null) {
+        const isPasswordValid = await Encrypt.comparePass(password, user.password._value)
+
+        if (!isPasswordValid) {
+          throw new Exception('Invalid password... please check your password')
+        }
+
+        // Generar el token JWT con el ID del usuario
+        const secret = (process.env.JWT_SECRET != null) ? process.env.JWT_SECRET : ''
+        const token = await Encrypt.generateToken({ user }, secret)
+
+        return { token }
+      } else {
+        console.log('No se encontró el usuario.')
+        return null // O manejar el caso de no encontrar el usuario
+      }
+    } catch (error: unknown) {
+      console.error('Error al obtener el usuario:', error)
+
+      // Asegúrate de que error sea un objeto y tenga la propiedad $response
+      if (error instanceof Error) {
+        console.error('Error message:', error.message)
+      }
+
+      if (typeof error === 'object' && error !== null && '$response' in error) {
+        console.error('Raw response:', (error as any).$response)
+      }
+
+      throw error // Vuelve a lanzar el error si es necesario
+    }
   }
 }

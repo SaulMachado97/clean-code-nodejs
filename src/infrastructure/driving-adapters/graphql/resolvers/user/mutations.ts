@@ -4,6 +4,7 @@ import { UUIDGeneratorV4 } from '@infrastructure/UUIDGeneratorV4'
 import { HandleError } from '../../utils/HandleError'
 import { UserUpdaterUseCase } from '@application/usecases/UserUpdater/UserUpdaterUseCase'
 import { UserDeleterUseCase } from '@application/usecases/UserDeleter/UserDeleterUseCase'
+import { PassGenerator } from '@infrastructure/PassGenerator'
 
 const userMutations = {
   createUser: async (_: any, args: any) => {
@@ -18,12 +19,16 @@ const userMutations = {
 
     const dynamoDBUserRepo = new DynamoDBUserRepository()
     const uuidGeneratorV4 = new UUIDGeneratorV4()
+    const passwordGenerator = new PassGenerator()
     const userCreateUseCase = new UserCreatorUseCase(dynamoDBUserRepo, uuidGeneratorV4)
+
+    const password = passwordGenerator.passwordEncrypt(String(phone))
 
     const userToCreate = {
       name,
       email,
       username,
+      password,
       age,
       phone,
       status

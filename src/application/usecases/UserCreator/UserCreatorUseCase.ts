@@ -2,14 +2,15 @@ import { User } from '../../../domain/entities/user/User'
 import { UserRepository } from '../../../domain/repositories/UserRepository'
 import { ExistUserByUsername } from '../../../domain/services/ExistsUserByUsername/ExistsUserByUsername'
 import { UserAlreadyExistException } from '../../../domain/exceptions/UserAlreadyExistException'
-import { UUIDGeneratorV4 } from '@infrastructure/UUIDGeneratorV4'
 import { UUIDGenerator } from '@domain/utils/uuidGenerator'
-import { Email, NumberPhone, PersonName, UserAge, UserId, Username, UserStatus } from '@domain/entities/user/valueObjects'
+import { Email, NumberPhone, Password, PersonName, UserAge, UserId, Username, UserStatus } from '@domain/entities/user/valueObjects'
+import { UUIDGeneratorV4 } from '@infrastructure/UUIDGeneratorV4'
 
 interface UserInput {
   name: string
   email: string
   username: string
+  password: string
   age: number
   phone: string
   status: boolean
@@ -20,10 +21,10 @@ export class UserCreatorUseCase {
   private readonly _existUserByUsername: ExistUserByUsername
   private readonly _uuidGenerator: UUIDGenerator
 
-  constructor (userRepository: UserRepository, uuidGenerator: UUIDGenerator) {
+  constructor (userRepository: UserRepository, uuidGenerator: UUIDGeneratorV4) {
     this._userRepository = userRepository
     this._existUserByUsername = new ExistUserByUsername(userRepository)
-    this._uuidGenerator = new UUIDGeneratorV4()
+    this._uuidGenerator = uuidGenerator
   }
 
   async run (body: UserInput): Promise<User> {
@@ -42,6 +43,7 @@ export class UserCreatorUseCase {
       new PersonName(body.name),
       new Email(body.email),
       new Username(body.username),
+      new Password(body.password),
       new UserAge(body.age),
       new NumberPhone(body.phone),
       new UserStatus(body.status)

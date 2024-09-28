@@ -1,4 +1,4 @@
-import { Email, NumberPhone, PersonName, UserAge, UserId, Username, UserStatus } from '@domain/entities/user/valueObjects'
+import { Email, NumberPhone, Password, PersonName, UserAge, UserId, Username, UserStatus } from '@domain/entities/user/valueObjects'
 import { User } from '../../../domain/entities/user/User'
 import { UserRepository } from '../../../domain/repositories/UserRepository'
 import { UserGetterById } from '../../../domain/services/UserGetterById/UserGetterById'
@@ -30,6 +30,7 @@ export class UserUpdaterUseCase {
       name: new PersonName(data.name ?? user.name),
       email: new Email(data.email ?? user.email),
       username: new Username(data.username ?? user.username),
+      password: new Password(data.phone ?? user.password),
       age: new UserAge(data.age ?? user.age),
       phone: new NumberPhone(data.phone ?? user.phone),
       status: new UserStatus(data.status ?? user.status)

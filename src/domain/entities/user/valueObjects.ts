@@ -20,6 +20,17 @@ export class Username {
   }
 }
 
+export class Password {
+  readonly _value: string
+
+  constructor (value: string) {
+    if (value === '' || value === undefined) {
+      throw new UsernameException()
+    }
+    this._value = value
+  }
+}
+
 export class PersonName {
   readonly _value: string
 
