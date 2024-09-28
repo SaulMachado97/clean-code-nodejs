@@ -166,7 +166,7 @@ export class DynamoDBUserRepository implements UserRepository {
 
       if (getResponse.Items === undefined) return null
 
-      if (getResponse.Items != null) {
+      if (getResponse.Items[0] != null) {
         const id: string = getResponse.Items[0].id ?? ''
         const name: string = getResponse.Items[0].name ?? ''
         const email: string = getResponse.Items[0].email ?? ''
