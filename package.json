@@ -8,7 +8,9 @@
     "start-console-app": "nodemon ./src/infrastructure/driving-adapters/console/console.ts",
     "start-rest-api": "nodemon ./src/infrastructure/driving-adapters/api-rest/start.ts",
     "start-app": "nodemon ./src/infrastructure/driving-adapters/index.ts",
-    "start-demo": "nodemon ./src/index.ts"
+    "start-demo": "nodemon ./src/index.ts",
+    "build": "tsc",
+    "start-api": "node -r module-alias/register -r tsconfig-paths/register dist/infrastructure/driving-adapters/api-rest/start.js"
   },
   "author": "",
   "license": "ISC",
@@ -45,8 +47,8 @@
     "typescript": "^5.5.3"
   },
   "_moduleAliases": {
-    "@domain": "src/domain",
-    "@application": "src/application",
-    "@infrastructure": "src/infrastructure"
+    "@domain": "dist/domain",
+    "@application": "dist/application",
+    "@infrastructure": "dist/infrastructure"
   }
 }

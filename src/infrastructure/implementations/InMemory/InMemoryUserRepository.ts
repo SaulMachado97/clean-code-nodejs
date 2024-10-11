@@ -1,9 +1,10 @@
+/*
 import { User } from '../../../domain/entities/user/User'
 import { UserRepository } from '../../../domain/repositories/UserRepository'
 
 export class InMemoryUserRepository implements UserRepository {
   private userData: User[] = [
-    /* {
+    {
       id: '1',
       name: 'Juan Perez',
       email: 'juan.perez@example.com',
@@ -20,7 +21,7 @@ export class InMemoryUserRepository implements UserRepository {
       age: 25,
       phone: '+1-555-5678',
       status: false
-    } */
+    }
   ]
 
   async getById (id: string): Promise<User | null> {
@@ -61,3 +62,4 @@ export class InMemoryUserRepository implements UserRepository {
     this.userData = users
   }
 }
+*/
