@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  app-web1:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '8080:80'
+    environment:
+      - AWS_ACCESS_KEY=cualquier_cosa
+    networks:
+      - clean-arch-net
+
+networks:
+  clean-arch-net:
+    driver: bridge

@@ -4,7 +4,7 @@ export class SauloAPIBackend {
   server?: Server
 
   async start (): Promise<void> {
-    const port: string = process.env.PORT ?? '8081'
+    const port: string = process.env.PORT ?? '80'
     this.server = new Server(port)
     return await this.server.listen()
   }
