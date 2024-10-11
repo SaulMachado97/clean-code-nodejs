@@ -9,8 +9,9 @@
     "start-rest-api": "nodemon ./src/infrastructure/driving-adapters/api-rest/start.ts",
     "start-app": "nodemon ./src/infrastructure/driving-adapters/index.ts",
     "start-demo": "nodemon ./src/index.ts",
-    "build": "tsc",
-    "start-api": "node -r module-alias/register -r tsconfig-paths/register dist/infrastructure/driving-adapters/api-rest/start.js"
+    "build": "tsc && cp -R src/infrastructure/driving-adapters/graphql/typedefs dist/infrastructure/driving-adapters/graphql/typedefs",
+    "start-api": "node -r module-alias/register -r tsconfig-paths/register dist/infrastructure/driving-adapters/api-rest/start.js",
+    "start": "node -r module-alias/register -r tsconfig-paths/register dist/infrastructure/driving-adapters/index.js"
   },
   "author": "",
   "license": "ISC",
